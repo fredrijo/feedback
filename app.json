@@ -1,8 +1,16 @@
 {
-  "name": "play-heroku-seed",
-  "description": "Seed app for Play, Heroku and Postgres with demo CRUD model, view, controller.",
-  "repository": "https://github.com/mkbehbehani/play-heroku-seed",
-  "addons": ["heroku-postgresql:hobby-dev", "papertrail"],
+  "name": "feedback",
+  "description": "Simple feedback app",
+  "repository": "https://github.com/fredrijo/feedback",
+  "addons": [
+    "heroku-postgresql:hobby-dev",
+    "papertrail"
+  ],
   "success_url": "/",
-  "keywords": ["play", "scala", "postgresql", "slick"]
+  "keywords": [
+    "play",
+    "scala",
+    "postgresql",
+    "slick"
+  ]
 }
