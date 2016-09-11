@@ -1,4 +1,4 @@
-name := """kantine-feedback"""
+name := """feedback"""
 
 version := "1.0-SNAPSHOT"
 
