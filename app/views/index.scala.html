@@ -27,17 +27,17 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Vote</th>
-                    <th>Date</th>
                     <th>Id</th>
+                    <th>Date</th>
+                    <th>Vote</th>
                 </tr>
             </thead>
             <tbody>
             @for(vote <- votes) {
                 <tr>
+                    <td>@vote.id</td>
                     <td>@vote.date</td>
                     <td>@vote.vote</td>
-                    <td>@vote.id</td>
                 </tr>
             }
             </tbody>

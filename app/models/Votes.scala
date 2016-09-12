@@ -1,7 +1,7 @@
 package models
 
-import java.sql.Timestamp
 import java.sql.Date
+import java.time.LocalDate
 
 import play.api.Play.current
 
@@ -38,4 +38,11 @@ object Votes {
     println(s"inserted $vote")
   }
 
+  //  def votesToday(): Map[Int, Int] =
+  //    votes
+  //      .filter(_.date == Date.valueOf(LocalDate.now()))
+  //      .groupBy(_.vote)
+  //      .map { case (key: Column[Int], value: Query[Votes, Vote, Seq]) =>
+  //        (key, value.size)
+  //      }.toMap
 }
