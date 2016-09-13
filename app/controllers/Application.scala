@@ -18,7 +18,7 @@ object Application extends Controller {
   )
 
   def index = Action {
-    Ok(views.html.index(Votes.all, voteForm))
+    Ok(views.html.index(Votes.all, Votes.today, Votes.best))
   }
 
   def save = Action { implicit request =>

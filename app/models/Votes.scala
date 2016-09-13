@@ -1,13 +1,14 @@
 package models
 
-import java.sql.Date
-import java.time.LocalDate
+import java.text.SimpleDateFormat
 
+import com.github.tototoshi.slick.PostgresJodaSupport._
+import org.joda.time.LocalDate
 import play.api.Play.current
 
 import scala.slick.driver.PostgresDriver.simple._
 
-case class Vote(vote: Int, date: Option[Date] = None, id: Option[Int] = None)
+case class Vote(vote: Int, date: LocalDate = LocalDate.now(), id: Option[Int] = None)
 
 class Votes(tag: Tag) extends Table[Vote](tag, "VOTES") {
 
@@ -18,16 +19,16 @@ class Votes(tag: Tag) extends Table[Vote](tag, "VOTES") {
   def vote = column[Int]("VOTE", O.NotNull)
 
   // The date can't be null
-  def date = column[Option[Date]]("DATE", O.NotNull, O.AutoInc, O.DBType("timestamp default now()"))
+  def date = column[LocalDate]("DATE", O.NotNull)
 
   // the * projection (e.g. select * ...) auto-transforms the tupled
-  // column values to / from a User
+  // column values to / from a Vote
   def * = (vote, date, id) <> (Vote.tupled, Vote.unapply)
 }
 
 object Votes {
-  val db = play.api.db.slick.DB
-  val votes = TableQuery[Votes]
+  private val db = play.api.db.slick.DB
+  private val votes = TableQuery[Votes]
 
   def all: List[Vote] = db.withSession { implicit session =>
     votes.sortBy(_.date.desc).list
@@ -38,11 +39,20 @@ object Votes {
     println(s"inserted $vote")
   }
 
-  //  def votesToday(): Map[Int, Int] =
-  //    votes
-  //      .filter(_.date == Date.valueOf(LocalDate.now()))
-  //      .groupBy(_.vote)
-  //      .map { case (key: Column[Int], value: Query[Votes, Vote, Seq]) =>
-  //        (key, value.size)
-  //      }.toMap
+  def today: List[Vote] = db.withSession { implicit session =>
+    votes.filter(_.date === LocalDate.now()).list
+  }
+
+  def averages: Map[LocalDate, Double] = db.withSession { implicit session =>
+    votes
+      .groupBy(_.date)
+      .map { case (key, query) =>
+        val values = query.map(_.vote).list
+        (key, values.sum.toDouble / values.size.toDouble)
+      }.list.toMap
+  }
+
+  def best: (LocalDate, Double) = db.withSession { implicit session =>
+    averages.toList.sortBy(_._2).reverse.head
+  }
 }

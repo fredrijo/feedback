@@ -1,46 +1,66 @@
-@(votes: List[Vote], userForm: Form[Int])
+@import org.joda.time.LocalDate
+@(votes: List[Vote], today: List[Vote], best: (LocalDate, Double))
 @main("Todays votes") {
-    <div class="container">
-        <div class="row">
-            <h1>Hvordan smakte maten idag?</h1>
-        </div>
-        <div class="row">
-            <div class="col-md-1">
-            @helper.form(action = routes.Application.save()) {
-                <input type="hidden" name="vote" value="1" />
-                <button type="submit" class="btn btn-danger">Dårlig</button>
-            }
-            </div>
-            <div class="col-md-1">
-            @helper.form(action = routes.Application.save()) {
-                <input type="hidden" name="vote" value="2" />
-                <button type="submit" class="btn btn-warning">Greit</button>
-            }
-            </div>
-            <div class="col-md-1">
-            @helper.form(action = routes.Application.save()) {
-                <input type="hidden" name="vote" value="3" />
-                <button type="submit" class="btn btn-success">Superdigg</button>
-            }
-            </div>
-        </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Date</th>
-                    <th>Vote</th>
-                </tr>
-            </thead>
-            <tbody>
-            @for(vote <- votes) {
-                <tr>
-                    <td>@vote.id</td>
-                    <td>@vote.date</td>
-                    <td>@vote.vote</td>
-                </tr>
-            }
-            </tbody>
-        </table>
+    <div class="row">
+        <h1>Hvordan smakte maten idag?</h1>
     </div>
+    <div class="row">
+        <div class="col-md-1">
+        @helper.form(action = routes.Application.save()) {
+            <input type="hidden" name="vote" value="1" />
+            <button type="submit" class="btn btn-danger">Dårlig</button>
+        }
+        </div>
+        <div class="col-md-1">
+        @helper.form(action = routes.Application.save()) {
+            <input type="hidden" name="vote" value="2" />
+            <button type="submit" class="btn btn-warning">Greit</button>
+        }
+        </div>
+        <div class="col-md-1">
+        @helper.form(action = routes.Application.save()) {
+            <input type="hidden" name="vote" value="3" />
+            <button type="submit" class="btn btn-success">Superdigg</button>
+        }
+        </div>
+    </div>
+    <h2>Idag</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Vote</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(vote <- today) {
+            <tr>
+                <td>@vote.id</td>
+                <td>@vote.date</td>
+                <td>@vote.vote</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h2>Alle</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Vote</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(vote <- votes) {
+            <tr>
+                <td>@vote.id</td>
+                <td>@vote.date</td>
+                <td>@vote.vote</td>
+            </tr>
+        }
+        </tbody>
+    </table>
 }
