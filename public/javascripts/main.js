@@ -120,11 +120,11 @@ function drawChart(data) {
                     data: [avg - 1.0, bestScore - 1.0],
                     backgroundColor: [
                         'rgba(10, 187, 181, 0.6)',
-                        'rgba(224, 142, 60, 0.6)'
+                        'rgba(236, 160, 80, 0.6)'
                     ],
                     borderColor: [
                         'rgba(10, 187, 181, 1)',
-                        'rgba(224, 142, 60, 1)'
+                        'rgba(236, 160, 80, 1)'
                     ],
                     borderWidth: 1
                 }]
