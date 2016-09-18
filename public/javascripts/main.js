@@ -61,7 +61,7 @@ function maxVotes(obj) {
 
 function drawChart(data) {
     if (countVotes(data) != countVotes(prevData)) {
-
+        Chart.defaults.global.defaultFontStyle = 'bold';
         prevData = data;
 
         var ctx1 = document.getElementById("voteChart");
@@ -87,7 +87,7 @@ function drawChart(data) {
                         'rgba(256, 200, 0, 1)',
                         'rgba(0, 200, 0, 1)'
                     ],
-                    borderWidth: 1
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -126,7 +126,7 @@ function drawChart(data) {
                         'rgba(10, 187, 181, 1)',
                         'rgba(236, 160, 80, 1)'
                     ],
-                    borderWidth: 1
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -147,7 +147,7 @@ function drawChart(data) {
                                 }
 
                             },
-                            position: "right"
+                            position: "left"
                         }]
                 }
             }

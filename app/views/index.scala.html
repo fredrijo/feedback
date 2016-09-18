@@ -14,11 +14,31 @@
                 $('#good').text(labelArray[2]);
             })
     </script>
+
     <div class="row">
-        <h1>Hvordan smakte maten idag?</h1>
+        <h1 class="display-1">Hvordan smakte maten idag?</h1>
+    </div>
+
+    <div class="row">
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 pull-down">
+            <canvas id="voteChart" class="pull-down"></canvas>
+        </div>
+        <div class="col-md-6 pull-down">
+            <canvas id="avgChart" class="pull-down"></canvas>
+        </div>
+    </div>
+
+    <div class="row">
+        <br />
     </div>
 
     <div class="row" id="buttons">
+        <div class="col-md-1">
+        </div>
         <div class="col-md-2">
         @helper.form(action = routes.Application.save()) {
             <input type="hidden" name="vote" value="1" />
@@ -36,19 +56,6 @@
             <input type="hidden" name="vote" value="3" />
             <button type="submit" class="btn btn-success" id="good"></button>
         }
-        </div>
-    </div>
-
-    <div class="row">
-        <br />
-    </div>
-
-    <div class="row">
-        <div class="col-md-6 pull-down">
-            <canvas id="voteChart" class="pull-down"></canvas>
-        </div>
-        <div class="col-md-6 pull-down">
-            <canvas id="avgChart" class="pull-down"></canvas>
         </div>
     </div>
 
