@@ -5,30 +5,36 @@
 
 @main("Todays votes") {
     <script>
+            var labelArray = ["Dårlig", "Greit", "Digg"];
             var bestDate = "@best._1.toString";
             var bestScore = @best._2;
+            $(document).ready(function () {
+                $('#bad').text(labelArray[0]);
+                $('#ok').text(labelArray[1]);
+                $('#good').text(labelArray[2]);
+            })
     </script>
     <div class="row">
         <h1>Hvordan smakte maten idag?</h1>
     </div>
 
     <div class="row" id="buttons">
-        <div class="col-md-1">
+        <div class="col-md-2">
         @helper.form(action = routes.Application.save()) {
             <input type="hidden" name="vote" value="1" />
-            <button type="submit" class="btn btn-danger" id="bad">Dårlig</button>
+            <button type="submit" class="btn btn-danger" id="bad"></button>
         }
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
         @helper.form(action = routes.Application.save()) {
             <input type="hidden" name="vote" value="2" />
-            <button type="submit" class="btn btn-warning">Greit</button>
+            <button type="submit" class="btn btn-warning" id="ok"></button>
         }
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
         @helper.form(action = routes.Application.save()) {
             <input type="hidden" name="vote" value="3" />
-            <button type="submit" class="btn btn-success">Superdigg</button>
+            <button type="submit" class="btn btn-success" id="good"></button>
         }
         </div>
     </div>

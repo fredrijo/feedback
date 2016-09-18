@@ -74,7 +74,7 @@ function drawChart(data) {
                 display: false
             },
             data: {
-                labels: ["Dårlig", "Greit", "Digg"],
+                labels: labelArray,
                 datasets: [{
                     data: [data['1'], data['2'], data['3']],
                     backgroundColor: [
@@ -117,7 +117,7 @@ function drawChart(data) {
             data: {
                 labels: ["Idag", bestDate],
                 datasets: [{
-                    data: [avg, bestScore],
+                    data: [avg - 1.0, bestScore - 1.0],
                     backgroundColor: [
                         'rgba(10, 187, 181, 0.6)',
                         'rgba(224, 142, 60, 0.6)'
@@ -138,10 +138,14 @@ function drawChart(data) {
 
                             stacked: true,
                             ticks: {
-                                fixedStepSize: 0.5,
-                                min: 0.0,
-                                max: 3.0,
-                                beginAtZero: true
+                                fixedStepSize: 1,
+                                min: 0,
+                                max: 2,
+                                beginAtZero: true,
+                                callback: function (label, index, labels) {
+                                    return labelArray[Math.abs(2 - index)];
+                                }
+
                             },
                             position: "right"
                         }]
