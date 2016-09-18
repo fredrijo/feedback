@@ -1,14 +1,22 @@
 @import org.joda.time.LocalDate
-@(votes: List[Vote], today: List[Vote], best: (LocalDate, Double))
+@import play.api.libs.json.Json
+@import play.api.libs.json.DefaultWrites
+@(votes: List[Vote], today: List[Vote], best: (LocalDate, Double))(implicit req: RequestHeader)
+
 @main("Todays votes") {
+    <script>
+            var bestDate = "@best._1.toString";
+            var bestScore = @best._2;
+    </script>
     <div class="row">
         <h1>Hvordan smakte maten idag?</h1>
     </div>
-    <div class="row">
+
+    <div class="row" id="buttons">
         <div class="col-md-1">
         @helper.form(action = routes.Application.save()) {
             <input type="hidden" name="vote" value="1" />
-            <button type="submit" class="btn btn-danger">Dårlig</button>
+            <button type="submit" class="btn btn-danger" id="bad">Dårlig</button>
         }
         </div>
         <div class="col-md-1">
@@ -24,43 +32,18 @@
         }
         </div>
     </div>
-    <h2>Idag</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>Vote</th>
-            </tr>
-        </thead>
-        <tbody>
-        @for(vote <- today) {
-            <tr>
-                <td>@vote.id</td>
-                <td>@vote.date</td>
-                <td>@vote.vote</td>
-            </tr>
-        }
-        </tbody>
-    </table>
 
-    <h2>Alle</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>Vote</th>
-            </tr>
-        </thead>
-        <tbody>
-        @for(vote <- votes) {
-            <tr>
-                <td>@vote.id</td>
-                <td>@vote.date</td>
-                <td>@vote.vote</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <div class="row">
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 pull-down">
+            <canvas id="voteChart" class="pull-down"></canvas>
+        </div>
+        <div class="col-md-6 pull-down">
+            <canvas id="avgChart" class="pull-down"></canvas>
+        </div>
+    </div>
+
 }

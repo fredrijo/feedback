@@ -8,7 +8,7 @@ import play.api.Play.current
 
 import scala.slick.driver.PostgresDriver.simple._
 
-case class Vote(vote: Int, date: LocalDate = LocalDate.now(), id: Option[Int] = None)
+case class Vote(vote: Double, date: LocalDate = LocalDate.now(), id: Option[Int] = None)
 
 class Votes(tag: Tag) extends Table[Vote](tag, "VOTES") {
 
@@ -16,7 +16,7 @@ class Votes(tag: Tag) extends Table[Vote](tag, "VOTES") {
   def id = column[Option[Int]]("ID", O.AutoInc, O.NotNull)
 
   // The value from 1-3, where 1=bad, 2=ok and 3=great!
-  def vote = column[Int]("VOTE", O.NotNull)
+  def vote = column[Double]("VOTE", O.NotNull)
 
   // The date can't be null
   def date = column[LocalDate]("DATE", O.NotNull)
@@ -46,13 +46,15 @@ object Votes {
   def averages: Map[LocalDate, Double] = db.withSession { implicit session =>
     votes
       .groupBy(_.date)
-      .map { case (key, query) =>
-        val values = query.map(_.vote).list
-        (key, values.sum.toDouble / values.size.toDouble)
-      }.list.toMap
+      .map { case (date, voteList) =>
+        (date, voteList.map(_.vote).avg.get)
+      }.toMap[LocalDate, Double]
   }
 
   def best: (LocalDate, Double) = db.withSession { implicit session =>
-    averages.toList.sortBy(_._2).reverse.head
+    if (averages.isEmpty)
+      (LocalDate.now, 0.0)
+    else
+      averages.toList.sortBy(_._2).reverse.head
   }
 }
