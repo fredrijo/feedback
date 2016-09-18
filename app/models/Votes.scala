@@ -55,6 +55,6 @@ object Votes {
     if (averages.isEmpty)
       (LocalDate.now, 0.0)
     else
-      averages.toList.sortBy(_._2).reverse.head
+      averages.filterNot(_._1 != LocalDate.now()).toList.sortBy(_._2).reverse.head
   }
 }
