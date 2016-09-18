@@ -45,6 +45,7 @@ object Votes {
 
   def averages: Map[LocalDate, Double] = db.withSession { implicit session =>
     votes
+      .filterNot(_.date === LocalDate.now())
       .groupBy(_.date)
       .map { case (date, voteList) =>
         (date, voteList.map(_.vote).avg.get)
@@ -55,6 +56,6 @@ object Votes {
     if (averages.isEmpty)
       (LocalDate.now, 0.0)
     else
-      averages.filterNot(_._1 != LocalDate.now()).toList.sortBy(_._2).reverse.head
+      averages.toList.sortBy(_._2).reverse.head
   }
 }

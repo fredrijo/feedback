@@ -28,7 +28,6 @@ object Application extends Controller {
       "1" -> Votes.today.count(_.vote == 1.0),
       "2" -> Votes.today.count(_.vote == 2.0),
       "3" -> Votes.today.count(_.vote == 3.0))
-    println(Json.toJson(data))
     Ok(Json.toJson(data))
   }
 }
